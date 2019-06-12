@@ -1,6 +1,7 @@
 # shopping_cart.py
 
 #from pprint import pprint
+import datetime
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -32,7 +33,7 @@ products = [
 
 # Capturing User Inputs
 
-total_price = 0
+subtotal = 0
 selected_items = []
 while True:
     selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
@@ -46,17 +47,28 @@ while True:
 
 #print(selected_items)
 
+print("---------------------------------")
+print("PYTHON MARKET")
+print("WWW.PYTHONMARKET.COM")
+print("---------------------------------")
+checkout = datetime.datetime.now()
+#print("CHECKOUT AT: " + str(checkout.strptime()))
+print("---------------------------------")
+print("SELECTED PRODUCTS:")
 for selected_item in selected_items:
     matching_products = [p for p in products if str(p["id"]) == str(selected_item)]
     matching_product = matching_products[0]
-    total_price = total_price + matching_product["price"]
-    print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
+    subtotal = subtotal + matching_product["price"]
+    tax = subtotal * 0.0875 
+    total = subtotal + tax
+    print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
 
-
-
-
-print("TOTAL PRICE: " + str(total_price))
-
+print("---------------------------------")
+print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
+print("TAX: " + "${0:,.2f}".format(tax))
+print("TOTAL: " + "${0:,.2f}".format(total))
+print("---------------------------------")
+print("THANK YOU, SEE YOU AGAIN SOON!")
 
 # A grocery store name of your choice
 # A grocery store phone number and/or website URL and/or address of choice
