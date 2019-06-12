@@ -3,7 +3,13 @@
 #from pprint import pprint
 import datetime
 
-products = [
+def to_usd(x):
+    price_usd = "${0:,.2f}".format(x)
+    return price_usd
+
+if __name__ == "__main__":
+
+    products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
     {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
     {"id":3, "name": "Robust Golden Unsweetened Oolong Tea", "department": "beverages", "aisle": "tea", "price": 2.49},
@@ -24,53 +30,60 @@ products = [
     {"id":18, "name": "Pizza for One Suprema Frozen Pizza", "department": "frozen", "aisle": "frozen pizza", "price": 12.50},
     {"id":19, "name": "Gluten Free Quinoa Three Cheese & Mushroom Blend", "department": "dry goods pasta", "aisle": "grains rice dried goods", "price": 3.99},
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
-] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
+    ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
-#print(products)
-# pprint(products)
+    #print(products)
+    # pprint(products)
 
-# TODO: write some Python code here to produce the desired output
+    # TODO: write some Python code here to produce the desired output
 
-# Capturing User Inputs
+    # Capturing User Inputs
 
-subtotal = 0
-tax = 0
-total = 0
-selected_items = []
-while True:
-    selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
-    if selected_item == "DONE":
-        break
-    else:
-        selected_items.append(selected_item)
+    subtotal = 0
+    tax = 0
+    total = 0
+    selected_items = []
+    while True:
+        selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
+        if selected_item == "DONE":
+            break
+        else:
+            selected_items.append(selected_item)
 
 
-# Info Display/Output
+    # Info Display/Output
 
-#print(selected_items)
+    #print(selected_items)
 
-print("---------------------------------")
-print("PYTHON MARKET")
-print("WWW.PYTHONMARKET.COM")
-print("---------------------------------")
-checkout = datetime.datetime.now()
-print("CHECKOUT AT: " + str(checkout.strftime("%Y-%m-%d %I:%M %p"))) # https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/ date time format
-print("---------------------------------")
-print("SELECTED PRODUCTS:")
-for selected_item in selected_items:
-    matching_products = [p for p in products if str(p["id"]) == str(selected_item)]
-    matching_product = matching_products[0]
-    subtotal = subtotal + matching_product["price"]
-    tax = subtotal * 0.0875 
-    total = subtotal + tax
-    print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
+    print("---------------------------------")
+    print("PYTHON MARKET")
+    print("WWW.PYTHONMARKET.COM")
+    print("---------------------------------")
+    checkout = datetime.datetime.now()
+    print("CHECKOUT AT: " + str(checkout.strftime("%Y-%m-%d %I:%M %p"))) # https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/ date time format
+    print("---------------------------------")
+    print("SELECTED PRODUCTS:")
+    for selected_item in selected_items:
+        matching_products = [p for p in products if str(p["id"]) == str(selected_item)]
+        matching_product = matching_products[0]
+        subtotal = subtotal + matching_product["price"]
+        tax = subtotal * 0.0875 
+        total = subtotal + tax
+        subtotal= to_usd(subtotal)
+        tax = to_usd(tax)
+        total = to_usd(total)
+        #print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
+        print("... " + matching_product["name"] + " " + "(" + str(subtotal) + ")")
 
-print("---------------------------------")
-print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
-print("TAX: " + "${0:,.2f}".format(tax))
-print("TOTAL: " + "${0:,.2f}".format(total))
-print("---------------------------------")
-print("THANK YOU, SEE YOU AGAIN SOON!")
+    print("---------------------------------")
+    #print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
+    #print("TAX: " + "${0:,.2f}".format(tax))
+    #print("TOTAL: " + "${0:,.2f}".format(total))
+    print("SUBTOTAL: " + subtotal)
+    print("TAX: " + tax)
+    print("TOTAL: " + total)
+    print("---------------------------------")
+    print("THANK YOU, SEE YOU AGAIN SOON!")
 
 # A grocery store name of your choice
 # A grocery store phone number and/or website URL and/or address of choice
