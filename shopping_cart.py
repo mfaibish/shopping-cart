@@ -34,6 +34,8 @@ products = [
 # Capturing User Inputs
 
 subtotal = 0
+tax = 0
+total = 0
 selected_items = []
 while True:
     selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
@@ -52,7 +54,7 @@ print("PYTHON MARKET")
 print("WWW.PYTHONMARKET.COM")
 print("---------------------------------")
 checkout = datetime.datetime.now()
-#print("CHECKOUT AT: " + str(checkout.strptime()))
+print("CHECKOUT AT: " + str(checkout.strftime("%Y-%m-%d %I:%M %p"))) # https://www.saltycrane.com/blog/2008/06/how-to-get-current-date-and-time-in/ date time format
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
 for selected_item in selected_items:
