@@ -32,6 +32,8 @@ products = [
 
 # Capturing User Inputs
 
+total_price = 0
+
 while True:
     selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
     if selected_item == "DONE":
@@ -39,11 +41,12 @@ while True:
     else:
         matching_products = [p for p in products if str(p["id"]) == str(selected_item)]
         matching_product = matching_products[0]
+        total_price = total_price + matching_product["price"]
         print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
-    #    shopping_list.append(selected_item)
-
+        
     #print("SHOPPING CART ITEM IDENTIFIERS INCLUDE: " + str(shopping_list).translate(None))
 
-    # Lookup products 
 
-    
+# Info Display/Output
+
+print("TOTAL PRICE: " + str(total_price))
