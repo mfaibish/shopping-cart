@@ -3,9 +3,9 @@
 #from pprint import pprint
 import datetime
 
-def to_usd(x):
-    price_usd = "${0:,.2f}".format(x)
-    return price_usd
+#def to_usd(x):
+#    price_usd = "${0:,.2f}".format(x)
+#    return price_usd
 
 if __name__ == "__main__":
 
@@ -43,13 +43,20 @@ if __name__ == "__main__":
     tax = 0
     total = 0
     selected_items = []
+    valid_ids = [str(p["id"]) for p in products]
+    
     while True:
         selected_item = input("Please input a product identifier, or DONE if there are no more items: ")
         if selected_item == "DONE":
             break
-        else:
+        elif str(selected_item) in valid_ids:
             selected_items.append(selected_item)
-
+        else:
+            print()
+            print("OOPS, this item does not exist. Please enter a new identifier.")
+            print()
+            next
+    
 
     # Info Display/Output
 
@@ -69,19 +76,12 @@ if __name__ == "__main__":
         subtotal = subtotal + matching_product["price"]
         tax = subtotal * 0.0875 
         total = subtotal + tax
-        subtotal= to_usd(subtotal)
-        tax = to_usd(tax)
-        total = to_usd(total)
-        #print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
-        print("... " + matching_product["name"] + " " + "(" + str(subtotal) + ")")
+        print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
 
     print("---------------------------------")
-    #print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
-    #print("TAX: " + "${0:,.2f}".format(tax))
-    #print("TOTAL: " + "${0:,.2f}".format(total))
-    print("SUBTOTAL: " + subtotal)
-    print("TAX: " + tax)
-    print("TOTAL: " + total)
+    print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
+    print("TAX: " + "${0:,.2f}".format(tax))
+    print("TOTAL: " + "${0:,.2f}".format(total))
     print("---------------------------------")
     print("THANK YOU, SEE YOU AGAIN SOON!")
 
