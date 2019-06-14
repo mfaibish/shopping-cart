@@ -2,12 +2,16 @@
 
 #from pprint import pprint
 import datetime
+import os
 
-#def to_usd(x):
-#    price_usd = "${0:,.2f}".format(x)
-#    return price_usd
+def to_usd(x):
+    price_usd = "${0:,.2f}".format(x)
+    return price_usd
 
 if __name__ == "__main__":
+
+    #products_filepath = os.path.join(os.path.dirname(__file__), "..", "products.csv")
+    
 
     products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -31,7 +35,6 @@ if __name__ == "__main__":
     {"id":19, "name": "Gluten Free Quinoa Three Cheese & Mushroom Blend", "department": "dry goods pasta", "aisle": "grains rice dried goods", "price": 3.99},
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
     ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
-
     #print(products)
     # pprint(products)
 
@@ -76,12 +79,12 @@ if __name__ == "__main__":
         subtotal = subtotal + matching_product["price"]
         tax = subtotal * 0.0875 
         total = subtotal + tax
-        print("... " + matching_product["name"] + " " + "(" + "${0:,.2f}".format(matching_product["price"]) + ")")
+        print("... " + matching_product["name"] + " " + "(" + to_usd((matching_product["price"])) + ")")
 
     print("---------------------------------")
-    print("SUBTOTAL: " + "${0:,.2f}".format(subtotal))
-    print("TAX: " + "${0:,.2f}".format(tax))
-    print("TOTAL: " + "${0:,.2f}".format(total))
+    print("SUBTOTAL: " + to_usd((subtotal)))
+    print("TAX: " + to_usd((tax)))
+    print("TOTAL: " + to_usd((total)))
     print("---------------------------------")
     print("THANK YOU, SEE YOU AGAIN SOON!")
 
