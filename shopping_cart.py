@@ -4,6 +4,16 @@
 import datetime
 import os
 import pandas
+import pprint
+
+from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+load_dotenv()
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
 
 #import csv
 
@@ -94,6 +104,34 @@ if __name__ == "__main__":
     print("---------------------------------")
     print("THANK YOU, SEE YOU AGAIN SOON!")
     print("---------------------------------")
+    print_receipt = input("Would you like an email receipt? y/n: ")
+    if print_receipt == "y":
+        client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+        print("CLIENT:", type(client))
+        subject = "Your Receipt from the Green Grocery Store"
+        recepient = input("Enter an email address. ")
+        html_content = "You're the bomb :)"
+        print("HTML:", html_content)
+
+        message = Mail(from_email=MY_ADDRESS, to_emails=recepient, subject=subject, html_content=html_content)
+        try:
+            response = client.send(message)
+
+            print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+            print(response.status_code) #> 202 indicates SUCCESS
+            print(response.body)
+            print(response.headers)
+            print("Email successfully sent.")
+
+        except Exception as e:
+            print("OOPS", e.message)
+    else:
+        print("THANK YOU")
+        exit
+
+
+
+
 
 # Write a program that asks the user to input one or more product identifiers, then looks up the prices for each, then prints an itemized customer receipt including the total amount owed. - DONE
 # The program should use one of the provided datastores (see "Data Setup") to represent the store owner's inventory of products and prices. - DONE

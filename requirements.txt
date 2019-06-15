@@ -1,0 +1,8 @@
+python-dotendv
+sendgrid==6.0.5
+twilio
+tweepy
+datetime
+os
+pandas
+pprint
