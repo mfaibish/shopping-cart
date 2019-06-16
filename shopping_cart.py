@@ -122,8 +122,8 @@ if __name__ == "__main__":
 }
         client = SendGridAPIClient(SENDGRID_API_KEY)
         print("CLIENT:", type(client))
-
-        message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS)
+        recipient = input("Enter an email address. ")
+        message = Mail(from_email=MY_ADDRESS, to_emails=recipient)
         print("MESSAGE:", type(message))
 
         message.template_id = SENDGRID_TEMPLATE_ID
