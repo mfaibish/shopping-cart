@@ -90,6 +90,7 @@ if __name__ == "__main__":
     print("---------------------------------")
     print("SELECTED PRODUCTS:")
     # CALCULATE LIST OF PRODUCTS SELECTED AND TOTALS
+        
     for selected_item in selected_items:
         matching_products = [p for p in products if str(p["id"]) == str(selected_item)]
         matching_product = matching_products[0]
@@ -106,6 +107,7 @@ if __name__ == "__main__":
     print("THANK YOU, SEE YOU AGAIN SOON!")
     print("---------------------------------")
     print_receipt = input("Would you like an email receipt? y/n: ")
+    # SEND RECEIPT
     if print_receipt == "y":
         template_data = {
             "total": str(to_usd(total)),
@@ -116,7 +118,7 @@ if __name__ == "__main__":
                 {"id":3, "name": "Product 3"},
                 {"id":2, "name": "Product 2"},
                 {"id":1, "name": "Product 1"}
-            ]
+            ]          
 }
         client = SendGridAPIClient(SENDGRID_API_KEY)
         print("CLIENT:", type(client))

@@ -55,8 +55,23 @@ Within the virtual environment, install pytest
 ```sh
 pip install pytest
 ```
+
+```sh
+pip install -r requirements.txt
+```
+
 Test your ability to run the code using:
 
 python shopping_cart.py
 
 A list of "products" should display
+
+# Usage
+
+Enter product items for purchase
+Prompt user for email receipt
+Send user email if prompted
+
+```sh
+python shopping_cart.py
+```
