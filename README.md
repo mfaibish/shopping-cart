@@ -5,7 +5,7 @@
 Create new repo for shopping-cart and clone it to your desktop. Navigate from the command line to 
 
 ```sh
-cd shopping_cart
+cd ~/Desktop/shopping-cart
 ```
 
 Create a file in the repo called shopping_cart.py and add the following contents to it
