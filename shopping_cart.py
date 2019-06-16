@@ -13,6 +13,7 @@ from sendgrid.helpers.mail import Mail
 load_dotenv()
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID", "OOPS, please set env var called 'SENDGRID_TEMPLATE_ID'")
 MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
 
 #import csv
@@ -95,7 +96,7 @@ if __name__ == "__main__":
         subtotal = subtotal + matching_product["price"]
         tax = subtotal * 0.0875 
         total = subtotal + tax
-        print("... " + matching_product["name"] + " " + "(" + to_usd((matching_product["price"])) + ")")#
+        print("... " + matching_product["name"] + " " + "(" + to_usd((matching_product["price"])) + ")")
 
     print("---------------------------------")
     print("SUBTOTAL: " + to_usd((subtotal)))
@@ -106,17 +107,38 @@ if __name__ == "__main__":
     print("---------------------------------")
     print_receipt = input("Would you like an email receipt? y/n: ")
     if print_receipt == "y":
-        client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+        template_data = {
+            "total": str(to_usd(total)),
+            "checkout": str(checkout.strftime("%Y-%m-%d %I:%M %p")),
+            "products":[
+                {"id":1, "name": "Product 1"},
+                {"id":2, "name": "Product 2"},
+                {"id":3, "name": "Product 3"},
+                {"id":2, "name": "Product 2"},
+                {"id":1, "name": "Product 1"}
+            ]
+}
+        client = SendGridAPIClient(SENDGRID_API_KEY)
         print("CLIENT:", type(client))
-        subject = "Your Receipt from the Green Grocery Store"
-        recepient = input("Enter an email address. ")
-        html_content = "You're the bomb :)"
-        print("HTML:", html_content)
 
-        message = Mail(from_email=MY_ADDRESS, to_emails=recepient, subject=subject, html_content=html_content)
+        message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS)
+        print("MESSAGE:", type(message))
+
+        message.template_id = SENDGRID_TEMPLATE_ID
+
+        message.dynamic_template_data = template_data
+
+#       EMAIL TEMPLATE HARD CODED 
+        #client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+        #print("CLIENT:", type(client))
+        #subject = "Your Receipt from the Green Grocery Store"
+        #recepient = input("Enter an email address. ")
+        #html_content = "You're the bomb :)"
+        #print("HTML:", html_content)
+        #message = Mail(from_email=MY_ADDRESS, to_emails=recepient, subject=subject, html_content=html_content)
+#
         try:
             response = client.send(message)
-
             print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
             print(response.status_code) #> 202 indicates SUCCESS
             print(response.body)
